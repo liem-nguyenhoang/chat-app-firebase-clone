@@ -1,30 +1,69 @@
-import React, { useState } from 'react'
-import { SafeAreaView, Text, View } from 'react-native'
-import { globalStyle, color } from '../../utility'
+import React, { useState, useContext } from 'react';
+import { SafeAreaView, Text, View } from 'react-native';
+import { globalStyle, color } from '../../utility';
 import { Logo, InputField, RoundCornerButton, FieldInput } from "../../component";
+import { Store } from "../../context/store";
+import { LOADING_START, LOADING_STOP } from '../../context/actions/type';
+import { SignUpRequest, AddUser } from "../../network";
+import { setAsyncStorage, keys } from "../../asyncStorage";
+import firebase from '../../firebase/config'
+import { setUniqueValue } from '../../utility/constants';
 
 const SignUp = ({ navigation }) => {
+    const globalState = useContext(Store);
+    const { dispatchLoaderAction } = globalState;
 
     const [credentials, setCredentials] = useState({
         email: '',
         password: '',
         name: '',
-        confirmPassword: ''
+        confirmPassword: '',
     });
     const { email, password, name, confirmPassword } = credentials;
 
     const onSignUpPress = () => {
         if (!name) {
-            alert('Name is required!')
+            alert('Name is required!');
         } else if (!email) {
-            alert('Email is required!')
+            alert('Email is required!');
         } else if (!password) {
-            alert('Password is required!')
+            alert('Password is required!');
         } else if (password != confirmPassword) {
-            alert('Password did not match!')
+            alert('Password did not match!');
         } else {
-            alert(JSON.stringify(credentials));
-        }
+            dispatchLoaderAction({
+                type: LOADING_START,
+            });
+            // setTimeout(() => {
+                SignUpRequest(email, password)
+                    .then(() => {
+                        console.log(firebase.auth().currentUser)
+                        let uid = firebase.auth().currentUser.uid;
+                        let profileImg = '';
+                        AddUser(name, email, uid, profileImg)
+                            .then(() => {
+                                setAsyncStorage(keys.uuid, uid);
+                                setUniqueValue(uid);
+                                dispatchLoaderAction({
+                                    type: LOADING_STOP,
+                                })
+                                navigation.navigate('Dashboard');
+                            })
+                            .catch((err) => {
+                                dispatchLoaderAction({
+                                    type: LOADING_STOP,
+                                });
+                                alert(err);
+                            })
+                    })
+                    .catch((err) => {
+                        dispatchLoaderAction({
+                            type: LOADING_STOP,
+                        });
+                        alert(err);
+                    });
+            // }, 424982);
+        };
     };
 
     const handleOnChange = (name, value) => {
@@ -76,8 +115,8 @@ const SignUp = ({ navigation }) => {
             </View>
         </SafeAreaView>
 
-    )
-}
+    );
+};
 
-export default SignUp
+export default SignUp;
 

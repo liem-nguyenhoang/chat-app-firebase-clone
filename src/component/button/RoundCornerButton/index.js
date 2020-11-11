@@ -1,6 +1,6 @@
-import React from 'react'
-import { TouchableOpacity, Text } from 'react-native'
-import styles from './styles'
+import React from 'react';
+import { TouchableOpacity, Text } from 'react-native';
+import styles from './styles';
 
 export default ({ title, btnStyle, btnTextStyle, onPress }) => {
     return (
@@ -11,5 +11,5 @@ export default ({ title, btnStyle, btnTextStyle, onPress }) => {
                 {title}
             </Text>
         </TouchableOpacity>
-    )
-}
+    );
+};

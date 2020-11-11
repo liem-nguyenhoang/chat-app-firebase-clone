@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext } from 'react';
 import {
     ActivityIndicator,
     Text,
@@ -6,7 +6,7 @@ import {
     Dimensions,
     Platform,
     View,
-} from 'react-native'
+} from 'react-native';
 import { color } from "../../utility";
 import { Store } from "../../context/store";
 

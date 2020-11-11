@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react'
+import React, { useReducer } from 'react';
 import { Loader } from "../reducers"; 
 
 export const Store = React.createContext();
@@ -6,7 +6,7 @@ export const Store = React.createContext();
 const dispatch = {};
 export function StoreProvider(props) {
     // ALL REDUCERS
-    const [mapLoaderState, dispatchLoaderAction] = useReducer(Loader, dispatch)
+    const [mapLoaderState, dispatchLoaderAction] = useReducer(Loader, dispatch);
 
     // VALUES  OF ALL REDUCERS
     const loaderValue = { mapLoaderState, dispatchLoaderAction };
@@ -17,5 +17,5 @@ export function StoreProvider(props) {
     };
 
     // STORE
-    return <Store.Provider value={value}>{props.children}</Store.Provider>
-}
+    return <Store.Provider value={value}>{props.children}</Store.Provider>;
+};

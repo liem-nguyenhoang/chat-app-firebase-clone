@@ -31,8 +31,8 @@ const FieldInput = ({
                 onSubmitEditing={onSubmitEditing}
             />
         </Item>
-    )
-}
+    );
+};
 
 const styles = StyleSheet.create({
     inputContainer: {

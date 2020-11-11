@@ -1,7 +1,7 @@
-import React from 'react'
-import { View, TouchableOpacity } from 'react-native'
+import React from 'react';
+import { View, TouchableOpacity } from 'react-native';
 import { Card, CardItem, Left, Body, Thumbnail } from "native-base";
-import styles from './styles'
+import styles from './styles';
 
 const StickyHeader = ({ name, img, onImgTap }) => {
     return (
@@ -34,7 +34,7 @@ const StickyHeader = ({ name, img, onImgTap }) => {
                 </Left>
             </CardItem>
         </Card>
-    )
-}
+    );
+};
 
-export default StickyHeader
+export default StickyHeader;

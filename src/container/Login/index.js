@@ -1,6 +1,6 @@
-import React, { useState, useContext } from 'react'
-import { SafeAreaView, Text, View } from 'react-native'
-import { globalStyle, color } from '../../utility'
+import React, { useState, useContext } from 'react';
+import { SafeAreaView, Text, View } from 'react-native';
+import { globalStyle, color } from '../../utility';
 import { Logo, InputField, RoundCornerButton, FieldInput } from "../../component";
 import { Store } from "../../context/store";
 import { LOADING_START, LOADING_STOP } from "../../context/actions/type";
@@ -68,8 +68,8 @@ const Login = ({ navigation }) => {
             </View>
         </SafeAreaView>
 
-    )
-}
+    );
+};
 
-export default Login
+export default Login;
 

@@ -1,4 +1,4 @@
-import * as React from 'react'
+import * as React from 'react';
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Login, SignUp, Dashboard } from "../container";
@@ -30,7 +30,7 @@ function NavContainer() {
                     options={{ headerLeft: null }} />
             </Stack.Navigator>
         </NavigationContainer>
-    )
+    );
 }
 
 export default NavContainer;

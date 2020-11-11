@@ -13,10 +13,11 @@ import { Store } from "../../context/store";
 const { height, width } = Dimensions.get("window");
 
 const Loader = () => {
-    // const globalState = useContext(Store);
-    // const { mapLoaderState } = globalState;
-    // const { loading } = mapLoaderState;
-    let loading= true;
+    const globalState = useContext(Store);
+    const { mapLoaderState } = globalState;
+    const { loading } = mapLoaderState;
+
+    // let loading= true;
     return loading ? (
         <View style={styles.loaderContainer}>
             <View style={styles.indicator}>

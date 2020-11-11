@@ -1,9 +1,15 @@
-import React from 'react'; 
+import React, { Fragment } from 'react';
 import Nav from "./src/navigation";
+import { Loader } from "./src/component/";
+import { StoreProvider } from "./src/context/store";
 
-export default function App() {
+const App = () => {
   return (
-    <Nav/>
+    <StoreProvider>
+      <Nav />
+      <Loader />
+    </StoreProvider>
   );
 }
- 
+
+export default App;

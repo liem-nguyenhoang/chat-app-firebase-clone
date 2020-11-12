@@ -4,6 +4,9 @@ import { globalStyle, color } from '../../utility';
 import { Logo, InputField, RoundCornerButton, FieldInput } from "../../component";
 import { Store } from "../../context/store";
 import { LOADING_START, LOADING_STOP } from "../../context/actions/type";
+import { LoginRequest } from "../../network";
+import { keys, setAsyncStorage } from '../../asyncStorage';
+import { setUniqueValue } from '../../utility/constants';
 
 const Login = ({ navigation }) => {
     const globalState = useContext(Store);
@@ -14,7 +17,7 @@ const Login = ({ navigation }) => {
         password: '',
     });
     const { email, password } = credentials;
-    
+
     const onLoginPress = () => {
         if (!email) {
             alert('Email is required!')
@@ -24,11 +27,23 @@ const Login = ({ navigation }) => {
             dispatchLoaderAction({
                 type: LOADING_START,
             });
-            setTimeout(() => {
-                dispatchLoaderAction({
-                    type:LOADING_STOP
-                })
-            }, 2000);
+            // setTimeout(() => {
+                LoginRequest(email, password)
+                    .then((res) => {
+                        setAsyncStorage(keys.uuid, res.user.uid);
+                        setUniqueValue(res.user.uid);
+                        dispatchLoaderAction({
+                            type: LOADING_STOP,
+                        });
+                        navigation.replace('Dashboard');
+                    })
+                    .catch((err) => {
+                        dispatchLoaderAction({
+                            type: LOADING_STOP,
+                        });
+                        alert(err);
+                    });
+            // }, 424982);
         }
     };
 

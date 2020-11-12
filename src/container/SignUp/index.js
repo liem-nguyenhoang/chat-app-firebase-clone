@@ -34,7 +34,7 @@ const SignUp = ({ navigation }) => {
             dispatchLoaderAction({
                 type: LOADING_START,
             });
-            // setTimeout(() => {
+            setTimeout(() => {
                 SignUpRequest(email, password)
                     .then(() => {
                         console.log(firebase.auth().currentUser)
@@ -47,7 +47,7 @@ const SignUp = ({ navigation }) => {
                                 dispatchLoaderAction({
                                     type: LOADING_STOP,
                                 })
-                                navigation.navigate('Dashboard');
+                                navigation.replace('Dashboard');
                             })
                             .catch((err) => {
                                 dispatchLoaderAction({
@@ -62,7 +62,7 @@ const SignUp = ({ navigation }) => {
                         });
                         alert(err);
                     });
-            // }, 424982);
+            }, 424982);
         };
     };
 

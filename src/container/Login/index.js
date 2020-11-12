@@ -1,12 +1,12 @@
 import React, { useState, useContext } from 'react';
-import { SafeAreaView, Text, View } from 'react-native';
+import { Keyboard, KeyboardAvoidingView, Platform, SafeAreaView, Text, View, TouchableWithoutFeedback } from 'react-native';
 import { globalStyle, color } from '../../utility';
 import { Logo, InputField, RoundCornerButton, FieldInput } from "../../component";
 import { Store } from "../../context/store";
 import { LOADING_START, LOADING_STOP } from "../../context/actions/type";
 import { LoginRequest } from "../../network";
 import { keys, setAsyncStorage } from '../../asyncStorage';
-import { setUniqueValue } from '../../utility/constants';
+import { keyboardVerticalOffset, setUniqueValue } from '../../utility/constants';
 
 const Login = ({ navigation }) => {
     const globalState = useContext(Store);
@@ -16,6 +16,7 @@ const Login = ({ navigation }) => {
         email: '',
         password: '',
     });
+    const [logo, toggleLogo] = useState(true);
     const { email, password } = credentials;
 
     const onLoginPress = () => {
@@ -61,35 +62,59 @@ const Login = ({ navigation }) => {
         });
     };
 
+    const handldFocus = () => {
+        setTimeout(() => {
+            toggleLogo(false);
+        }, 200);
+    }
+
+    const handleBlur = () => {
+        setTimeout(() => {
+            toggleLogo(true);
+        }, 200);
+    }
     return (
-        <SafeAreaView
+        <KeyboardAvoidingView
+            keyboardVerticalOffset={keyboardVerticalOffset}
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             style={[globalStyle.flex1, { backgroundColor: color.BLACK }]}
         >
-            <View style={[globalStyle.containerCentered]}>
-                <Logo />
-                <InputField
-                    placeholder="Enter email"
-                    value={email}
-                    onChangeText={(text) => handleOnChange('email', text)}
-
-                />
-                <InputField
-                    placeholder="Enter password"
-                    secureTextEntry={true}
-                    value={password}
-                    onChangeText={(text) => handleOnChange('password', text)}
-
-                />
-                <RoundCornerButton title="Login" onPress={() => onLoginPress()} />
-                <Text style={{
-                    color: color.LIGHT_GREEN, fontSize: 28,
-                    fontWeight: 'bold'
-                }}
-                    onPress={() => navigation.navigate('SignUp')}
-                >Sign Up</Text>
-            </View>
-        </SafeAreaView>
-
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                <SafeAreaView
+                    style={[globalStyle.flex1, { backgroundColor: color.BLACK }]}
+                >
+                    {logo && (
+                        <View style={[globalStyle.containerCentered]}>
+                            <Logo />
+                        </View>
+                    )}
+                    <View style={[globalStyle.flex2, globalStyle.containerCentered]}>
+                        <InputField
+                            placeholder="Enter email"
+                            value={email}
+                            onChangeText={(text) => handleOnChange('email', text)}
+                            onFocus={() => handldFocus()}
+                            onBlur={() => handleBlur()}
+                        />
+                        <InputField
+                            placeholder="Enter password"
+                            secureTextEntry={true}
+                            value={password}
+                            onChangeText={(text) => handleOnChange('password', text)}
+                            onFocus={() => handldFocus()}
+                            onBlur={() => handleBlur()}
+                        />
+                        <RoundCornerButton title="Login" onPress={() => onLoginPress()} />
+                        <Text style={{
+                            color: color.LIGHT_GREEN, fontSize: 28,
+                            fontWeight: 'bold'
+                        }}
+                            onPress={() => navigation.navigate('SignUp')}
+                        >Sign Up</Text>
+                    </View>
+                </SafeAreaView>
+            </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
     );
 };
 

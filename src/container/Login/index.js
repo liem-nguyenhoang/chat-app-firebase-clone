@@ -28,21 +28,28 @@ const Login = ({ navigation }) => {
                 type: LOADING_START,
             });
             // setTimeout(() => {
-                LoginRequest(email, password)
-                    .then((res) => {
-                        setAsyncStorage(keys.uuid, res.user.uid);
-                        setUniqueValue(res.user.uid);
+            LoginRequest(email, password)
+                .then((res) => {
+                    if (!res.additionalUserInfo) { // Dùng để  kiểm tra pasword của user
                         dispatchLoaderAction({
                             type: LOADING_STOP,
                         });
-                        navigation.replace('Dashboard');
-                    })
-                    .catch((err) => {
-                        dispatchLoaderAction({
-                            type: LOADING_STOP,
-                        });
-                        alert(err);
+                        alert(res);
+                        return;
+                    }
+                    setAsyncStorage(keys.uuid, res.user.uid);
+                    setUniqueValue(res.user.uid);
+                    dispatchLoaderAction({
+                        type: LOADING_STOP,
                     });
+                    navigation.replace('Dashboard');
+                })
+                .catch((err) => {
+                    dispatchLoaderAction({
+                        type: LOADING_STOP,
+                    });
+                    alert(err);
+                });
             // }, 424982);
         }
     };

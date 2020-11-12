@@ -35,33 +35,39 @@ const SignUp = ({ navigation }) => {
                 type: LOADING_START,
             });
             // setTimeout(() => {
-                SignUpRequest(email, password)
-                    .then(() => {
-                        console.log(firebase.auth().currentUser)
-                        let uid = firebase.auth().currentUser.uid;
-                        let profileImg = '';
-                        AddUser(name, email, uid, profileImg)
-                            .then(() => {
-                                setAsyncStorage(keys.uuid, uid);
-                                setUniqueValue(uid);
-                                dispatchLoaderAction({
-                                    type: LOADING_STOP,
-                                })
-                                navigation.replace('Dashboard');
-                            })
-                            .catch((err) => {
-                                dispatchLoaderAction({
-                                    type: LOADING_STOP,
-                                });
-                                alert(err);
-                            })
-                    })
-                    .catch((err) => {
+            SignUpRequest(email, password)
+                .then((res) => {
+                    if (!res.additionalUserInfo) { // Dùng để  kiểm tra email user đã tồn tại chưa
                         dispatchLoaderAction({
                             type: LOADING_STOP,
                         });
-                        alert(err);
+                        alert(res);
+                        return;
+                    }
+                    let uid = firebase.auth().currentUser.uid;
+                    let profileImg = '';
+                    AddUser(name, email, uid, profileImg)
+                        .then(() => {
+                            setAsyncStorage(keys.uuid, uid);
+                            setUniqueValue(uid);
+                            dispatchLoaderAction({
+                                type: LOADING_STOP,
+                            })
+                            navigation.replace('Dashboard');
+                        })
+                        .catch((err) => {
+                            dispatchLoaderAction({
+                                type: LOADING_STOP,
+                            });
+                            alert(err);
+                        })
+                })
+                .catch((err) => {
+                    dispatchLoaderAction({
+                        type: LOADING_STOP,
                     });
+                    alert(err);
+                });
             // }, 424982);
         };
     };

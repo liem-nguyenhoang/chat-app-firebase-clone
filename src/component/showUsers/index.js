@@ -19,7 +19,7 @@ const ShowUsers = ({ name, img, onImgTap, onNameTap }) => {
                             <Thumbnail source={{ uri: img }} resizeMode='cover' />
                         ) : (
                                 <Text style={styles.thumbnailName}>
-                                    {name.chartAt(0)}
+                                    {name.charAt(0)}
                                 </Text>
                             )
                         }

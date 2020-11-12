@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity,Text } from 'react-native';
 import { Card, CardItem, Left, Body, Thumbnail } from "native-base";
 import styles from './styles';
 
@@ -23,7 +23,7 @@ const StickyHeader = ({ name, img, onImgTap }) => {
                                     <Thumbnail source={{ uri: img }} resizeMode='cover' />
                                 ) : (
                                     <Text style={styles.thumbnaiName}>
-                                        {name.chartAt(0)}
+                                        {name.charAt(0)}
                                     </Text>
                                 )
                         }

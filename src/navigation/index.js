@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { Login, SignUp, Dashboard, Splash } from "../container";
+import { Login, SignUp, Dashboard, Splash, ShowFullImg } from "../container";
 import { color } from "../utility";
 
 const Stack = createStackNavigator();
@@ -31,6 +31,8 @@ function NavContainer() {
                     options={{ headerShown: false }} />
                 <Stack.Screen name="Dashboard" component={Dashboard}
                     options={{ headerLeft: null }} />
+                <Stack.Screen name="ShowFullImg" component={ShowFullImg}
+                    options={{ headerBackTitle: null }} />
             </Stack.Navigator>
         </NavigationContainer>
     );
